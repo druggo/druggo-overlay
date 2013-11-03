@@ -1,0 +1,57 @@
+add new log format string %J for remote_port
+
+--- lighttpd-1.4.33/src/inet_ntop_cache.c	2010-08-17 17:04:38.000000000 +0800
++++ lighttpd-1.4.33n/src/inet_ntop_cache.c	2013-10-29 16:38:24.033065262 +0800
+@@ -50,3 +50,11 @@
+ 	return inet_ntoa(addr->ipv4.sin_addr);
+ #endif
+ }
++
++const unsigned short * inet_ntop_cache_get_port(sock_addr *addr) {                     
++#ifdef HAVE_IPV6                                                                
++        return ntohs(addr->plain.sa_family ? addr->ipv6.sin6_port : addr->ipv4.sin_port);
++#else                                                                           
++            return ntohs(addr->ipv4.sin_port);                                          
++#endif                                                                          
++}     
+--- lighttpd-1.4.33/src/inet_ntop_cache.h	2009-09-02 02:34:54.000000000 +0800
++++ lighttpd-1.4.33n/src/inet_ntop_cache.h	2013-10-29 16:37:55.151771006 +0800
+@@ -3,5 +3,6 @@
+ 
+ #include "base.h"
+ const char * inet_ntop_cache_get_ip(server *srv, sock_addr *addr);
++const unsigned short * inet_ntop_cache_get_port(sock_addr *addr);
+ 
+ #endif
+--- lighttpd-1.4.33/src/mod_accesslog.c	2013-08-30 21:57:33.000000000 +0800
++++ lighttpd-1.4.33n/src/mod_accesslog.c	2013-10-29 16:44:11.706570916 +0800
+@@ -32,6 +32,7 @@
+ 			FORMAT_UNSUPPORTED,
+ 			FORMAT_PERCENT,
+ 			FORMAT_REMOTE_HOST,
++			FORMAT_REMOTE_PORT,
+ 			FORMAT_REMOTE_IDENT,
+ 			FORMAT_REMOTE_USER,
+ 			FORMAT_TIMESTAMP,
+@@ -73,6 +74,7 @@
+ {
+ 	{ '%', FORMAT_PERCENT },
+ 	{ 'h', FORMAT_REMOTE_HOST },
++	{ 'J', FORMAT_REMOTE_PORT },
+ 	{ 'l', FORMAT_REMOTE_IDENT },
+ 	{ 'u', FORMAT_REMOTE_USER },
+ 	{ 't', FORMAT_TIMESTAMP },
+@@ -762,6 +764,13 @@
+ 				buffer_append_string(b, inet_ntop_cache_get_ip(srv, &(con->dst_addr)));
+ 
+ 				break;
++			case FORMAT_REMOTE_PORT:
++
++				/* we need find where port is */
++
++				buffer_append_long(b, inet_ntop_cache_get_port(&(con->dst_addr)));
++
++				break;
+ 			case FORMAT_REMOTE_IDENT:
+ 				/* ident */
+ 				buffer_append_string_len(b, CONST_STR_LEN("-"));
