@@ -1,0 +1,15 @@
+--- plugins/sorttab_display/normal_sorttab_page.c.org	2014-07-08 00:32:05.376000000 +0800
++++ plugins/sorttab_display/normal_sorttab_page.c	2014-07-08 00:33:04.606000000 +0800
+@@ -272,12 +272,6 @@
+ 
+     switch (column) { /* We only have one column, so this code is overkill... */
+     case ST_COLUMN_ENTRY:
+-        if (entry->master || entry->compilation) { /* mark the "All" entry */
+-            g_object_set(G_OBJECT (renderer), "text", entry->name, "editable", FALSE, "weight", PANGO_WEIGHT_BOLD, NULL);
+-        }
+-        else {
+-            g_object_set(G_OBJECT (renderer), "text", entry->name, "editable", TRUE, "weight", PANGO_WEIGHT_NORMAL, NULL);
+-        }
+         break;
+     }
+ }
