@@ -1,0 +1,16 @@
+--- a/drivers/usb/storage/unusual_devs.h	2018-04-02 05:20:27.000000000 +0800
++++ b/drivers/usb/storage/unusual_devs.h	2018-06-02 19:08:38.002689059 +0800
+@@ -319,6 +319,13 @@
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_WP_DETECT),
+ 
++/* Add by Druggo Yang <druggo@gmail.com> */
++UNUSUAL_DEV(  0x0480, 0xa001, 0x0100, 0x9999,
++		"Toshiba",
++		"External USB 3.0 DTB305",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_ALWAYS_SYNC),
++
+ /* Reported by Egbert Eich <eich@suse.com> */
+ UNUSUAL_DEV(  0x0480, 0xd010, 0x0100, 0x9999,
+ 		"Toshiba",
