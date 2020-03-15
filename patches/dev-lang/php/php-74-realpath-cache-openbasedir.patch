@@ -1,0 +1,32 @@
+patch from:
+https://bugs.php.net/bug.php?id=52312
+
+make sure disable these functions:
+disable_functions = symlink,link
+
+--- php-7.4.3/main/main.c	2020-02-18 19:53:05.000000000 +0800
++++ php-7.4.3-fast/main/main.c	2020-03-15 18:45:57.276287178 +0800
+@@ -1807,9 +1807,9 @@
+ 		}
+ 
+ 		/* Disable realpath cache if an open_basedir is set */
+-		if (PG(open_basedir) && *PG(open_basedir)) {
++		/* if (PG(open_basedir) && *PG(open_basedir)) {
+ 			CWDG(realpath_cache_size_limit) = 0;
+-		}
++		} */
+ 
+ 		if (PG(expose_php)) {
+ 			sapi_add_header(SAPI_PHP_VERSION_HEADER, sizeof(SAPI_PHP_VERSION_HEADER)-1, 1);
+@@ -2289,9 +2289,9 @@
+ #endif
+ 
+ 	/* Disable realpath cache if an open_basedir is set */
+-	if (PG(open_basedir) && *PG(open_basedir)) {
++	/* if (PG(open_basedir) && *PG(open_basedir)) {
+ 		CWDG(realpath_cache_size_limit) = 0;
+-	}
++	} */
+ 
+ 	PG(have_called_openlog) = 0;
+ 
