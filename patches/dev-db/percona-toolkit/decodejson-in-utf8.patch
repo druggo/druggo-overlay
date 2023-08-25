@@ -1,0 +1,19 @@
+--- a/bin/pt-query-digest	2023-05-31 00:58:16.000000000 +0800
++++ b/bin/pt-query-digest	2023-08-25 16:35:21.827284411 +0800
+@@ -6,6 +6,7 @@
+ 
+ use strict;
+ use warnings FATAL => 'all';
++use Encode;
+ 
+ # This tool is "fat-packed": most of its dependent modules are embedded
+ # in this file.  Setting %INC to this file for each module makes Perl aware
+@@ -8199,7 +8200,7 @@
+    };
+    my $json = $self->encode_json($data);
+    $json .= "\n" unless $json =~ /\n\Z/;
+-   return $json;
++   return Encode::decode_utf8($json);
+ };
+ 
+ no Lmo;
