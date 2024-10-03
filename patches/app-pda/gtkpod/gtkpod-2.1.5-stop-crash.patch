@@ -1,0 +1,16 @@
+--- data/default.profile.org	2024-10-03 17:02:46.025505994 +0800
++++ data/default.profile	2024-10-03 17:02:53.733741116 +0800
+@@ -7,13 +7,6 @@
+ 		   attribute="Location"
+ 		   value="filetype_mp3:MP3FileTypePlugin"/>
+   </plugin>
+-  <plugin name="Sorttab Display Plugin"
+-	      url="http://www.gtkpod.org/plugins/"
+-		  mandatory="yes">
+-		  <require group="Anjuta Plugin"
+-		   attribute="Location"
+-		   value="sorttab_display:SorttabDisplayPlugin"/>
+-  </plugin>
+   <plugin name="Track Display Plugin"
+ 	      url="http://www.gtkpod.org/plugins/"
+ 		  mandatory="yes">
